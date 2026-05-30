@@ -72,7 +72,7 @@ class ODHACore01:
             self._amputate("LogicStateHash inkonsistent")
             return
         self.F["HASH_VALID"] = 1
-        print("[VM] Invarianten verifiziert. SNR = ∞.")
+        print("[VM] Invarianten verifiziert. SNR = \u221e.")
         
     def execute_cycle(self, erf, hash_match, length_um, width_um, thickness_um, rho_ohm_m, c_per_um_fF):
         if not self.cluster_power_good:
@@ -83,7 +83,7 @@ class ODHACore01:
         t_total_path = t_static_logic + t_rc_drive
         
         print("\n--- Start MDS-Hash-Sync-Zyklus ---")
-        print(f"[GEOM] L={length_um}µm, W={width_um}µm, T={thickness_um}µm")
+        print(f"[GEOM] L={length_um}\u00b5m, W={width_um}\u00b5m, T={thickness_um}\u00b5m")
         print(f"[RC] R_wire={r_wire:.2f} \u03a9, C_load={c_load*1e15:.2f} fF")
         print(f"[TIMING] t_total={t_total_path:.2f} ps (RC-Drive: {t_rc_drive:.2f} ps)")
         
