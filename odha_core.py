@@ -107,3 +107,24 @@ if __name__ == "__main__":
     print("\n>>> TEST 2: Zu lange Leitung / zu hohe Kapazität (T40 verletzt)")
     core_fail = ODHACore01(material_delta=65.0)
     core_fail.execute_cycle(erf=1.90, hash_match=True, length_um=800, width_um=0.1, thickness_um=0.2, rho_ohm_m=2e-8, c_per_um_fF=0.2)
+
+    # Erweiterte Validierung: Stochastischer Noise-Sweep über ERF-Grenzbereich
+    print("\n>>> TEST 3: Stochastischer Noise-Sweep (ERF-Grenzbereichs-Analyse)")
+    core_sweep = ODHACore01(material_delta=65.0)
+    
+    # Iteration über den kritischen Übergangsbereich von 1.70 bis 1.80
+    for simulated_erf in [1.70, 1.75, 1.76, 1.77, 1.78, 1.80]:
+        print(f"\n[SWEEP] Evaluiere ERF = {simulated_erf}")
+        # Reset der Kontroll-Flags für isolierten Sweep-Testlauf
+        core_sweep.cluster_power_good = True  
+        core_sweep.F = {"ABORT": 0, "MDS_VALID": 0, "HASH_VALID": 0}
+        
+        core_sweep.execute_cycle(
+            erf=simulated_erf, 
+            hash_match=True, 
+            length_um=200, 
+            width_um=0.1, 
+            thickness_um=0.2, 
+            rho_ohm_m=2e-8, 
+            c_per_um_fF=0.05
+        )
